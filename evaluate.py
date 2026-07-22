@@ -4,9 +4,10 @@ import torch.nn.functional as F
 import torch.optim as optim
 import torchvision.transforms as transforms
 from torchvision import datasets
+import numpy as np
 
 from torch.utils.data import Dataset, DataLoader, random_split
-from sklearn.metrics import confusion_matrix, classification_report
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -36,7 +37,7 @@ test_transform = transforms.Compose([
 ])
 
 dataset = datasets.ImageFolder(root = data_directory,transform = None)
-
+classes = dataset.classes
 #train test validation
 
 total = len(dataset)
@@ -66,21 +67,14 @@ class transform_subset(Dataset):
   def __len__(self):
     return len(self.subset)
 
-modified_train = transform_subset(train_set,train_transform)
-modified_val = transform_subset(val_set,test_transform)
 modified_test = transform_subset(test_set,test_transform)
-
-train_loader = DataLoader(modified_train,batch_size=32,shuffle=True,num_workers=2,pin_memory=True)
-val_loader = DataLoader(modified_val,batch_size=32,shuffle=False)
 test_loader = DataLoader(modified_test,batch_size=32,shuffle=False)
 
 def ResNet50(img_channels=3, num_classes = 5):
   return ResNet(block,[3,4,6,3],img_channels,num_classes)
 model = ResNet50(img_channels=3, num_classes=5).to(device)
 
-model.load_state_dict(torch.load('trained_net.pth', map_location=device))
-
-from sklearn.metrics import classification_report, accuracy_score
+model.load_state_dict(torch.load('best_model.pth', map_location=device))
 
 predict_list = []
 label_list = []
@@ -113,8 +107,6 @@ print('Classification Report')
 print(rpt)
 
 #generating confusion matrix
-from sklearn.metrics import confusion_matrix
-import seaborn as sns
 
 cm = confusion_matrix(label_arr, prediction_arr, labels=list(range(len(classes))))
 plt.figure(figsize=(8, 6))
