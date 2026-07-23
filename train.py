@@ -98,13 +98,12 @@ scheduler = optim.lr_scheduler.ReduceLROnPlateau(
     patience=3
 )
 
-
 #training
-for epoch in range(45):
+best_val_loss = float('inf')
+
+for epoch in range(50):
     print(f'Training epoch {epoch}..')
-
     model.train()
-
     running_loss = 0.0
 
     for i, data in enumerate(train_loader):
@@ -113,17 +112,36 @@ for epoch in range(45):
         labels = labels.to(device)
 
         optimizer.zero_grad()
-
         outputs = model(inputs)
-
         loss = criterion(outputs, labels)
         loss.backward()
         optimizer.step()
 
         running_loss += loss.item()
         epoch_loss = running_loss / len(train_loader)
-    print(f'Loss: {epoch_loss:.4f}')
-    scheduler.step(epoch_loss)
 
-torch.save(model.state_dict(), 'trained_net.pth')
-print("Training complete. Weights saved to trained_net.pth")
+    model.eval()
+    val_running_loss = 0.0
+
+    with torch.no_grad():
+        for data in val_loader:
+            inputs, labels = data
+            inputs = inputs.to(device)
+            labels = labels.to(device)
+
+            outputs = model(inputs)
+            loss = criterion(outputs, labels)
+            val_running_loss += loss.item()
+
+    val_loss = val_running_loss / len(val_loader)
+
+    print(f'Train Loss: {epoch_loss:.4f} | Validation Loss: {val_loss:.4f}')
+
+    if val_loss < best_val_loss:
+        best_val_loss = val_loss
+        torch.save(model.state_dict(), 'best_model.pth')
+        print(f"New best val loss, saved.")
+
+    scheduler.step(val_loss)
+
+print("Training complete. Best weights saved to best_model.pth")

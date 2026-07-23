@@ -42,8 +42,6 @@ class block(nn.Module):
     x += identity
     x = self.relu(x)
     return x
-
-
 class ResNet(nn.Module):
   #implementing the ResNet 50 architecture
   #the 1st block is used 3 times
@@ -65,6 +63,7 @@ class ResNet(nn.Module):
     self.layer4 = self._make_layer(block,layers[3],out_channels=512,stride=2)
 
     self.avgpool = nn.AdaptiveAvgPool2d((1,1))
+    self.dropout = nn.Dropout(p=0.3)
     self.fc = nn.Linear(512*4,num_classes)
 
   def forward(self,x):
@@ -80,6 +79,7 @@ class ResNet(nn.Module):
 
     x = self.avgpool(x)
     x = x.reshape(x.shape[0],-1)
+    x = self.dropout(x)
     x = self.fc(x)
 
     return x
