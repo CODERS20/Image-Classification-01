@@ -2,26 +2,26 @@
 
 ## Model Evaluation & Performance Metrics
 
-The final ResNet-50 framework was evaluated on an independent test set containing **152 distinct images**. The evaluation metrics below were generated using the `scikit-learn` library (`metrics.classification_report`), showing an overall **Test Set Accuracy of 90.13%.**
+The final ResNet-50 framework was evaluated on an independent test set containing **176 distinct images**. The evaluation metrics below were generated using `scikit-learn` (`metrics.classification_report`), achieving an overall **Test Set Accuracy of 91.48%.**
 
 ### Classification Report Matrix
 
-| Target Class | Precision | Recall | F1-Score | Sample Size |
+| Target Class | Precision | Recall | F1-Score | Sample Size (Support) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Planet** | `0.9697` | `1.0000` | **`0.9846`** | 32 |
-| **Elliptical Galaxy** | `0.9750` | `0.9512` | `0.9630` | 41 |
-| **Star Cluster** | `0.9630` | `0.8125` | `0.8814` | 32 |
-| **Nebula** | `0.8140` | `0.8974` | `0.8537` | 39 |
-| **Spiral Galaxy** | `0.5556` | `0.6250` | `0.5882` | 8 |
+| **Elliptical Galaxy** | `0.9375` | `1.0000` | **`0.9677`** | 30 |
+| **Nebula** | `0.8261` | `0.9048` | `0.8636` | 42 |
+| **Planet** | `0.9355` | `1.0000` | **`0.9667`** | 29 |
+| **Spiral Galaxy** | `0.9730` | `0.8780` | `0.9231` | 41 |
+| **Star Cluster** | `0.9333` | `0.8235` | `0.8750` | 34 |
 | | | | | |
-| **Overall Accuracy** | — | — | **`0.9013`** | **152** |
-| **Macro Average** | `0.8554` | `0.8572` | `0.8542` | 152 |
-| **Weighted Average** | `0.9080` | `0.9013` | `0.9026` | 152 |
+| **Overall Accuracy** | — | — | **`0.9148`** | **176** |
+| **Macro Average** | `0.9211` | `0.9213` | `0.9212` | 176 |
+| **Weighted Average** | `0.9180` | `0.9148` | `0.9144` | 176 |
 
 ---
 
 ## Confusion Matrix
-![Confusion Matrix](final.png)
+![Confusion Matrix](confusionMatrix.png)
 
 ---
 
@@ -30,12 +30,12 @@ To keep this repository lightweight and prevent storage bloat, the full 1,508-im
 A curated sub-folder (`dataset-sample/`) containing a few diagnostic preview images per class is included directly in this repository for immediate model testing and inference verification.
 
 ## Dataset Sources Used
-A total of 1,508 images were used to train and test the model. The dataset is evenly split across 5 categories.
-* **(https://noirlab.edu/public/images/archive/category/starclusters/page/2/?sort=-release_date)**
-* **(https://www.kaggle.com/datasets/akhileshravi/nebula-images)**
-* **(https://www.kaggle.com/datasets/robertmifsud/resized-reduced-gz2-images)**
-* **(https://universe.roboflow.com/fashion-8zzww/planet-2vlvi/dataset/2)**
-* **(https://esahubble.org/)**
+A total of 1,746 images were used to train and test the model. The dataset is evenly split across 5 categories.
+* [NOIRLab Star Cluster Archive](https://noirlab.edu/public/images/archive/category/starclusters/page/2/?sort=-release_date)
+* [Kaggle Nebula Dataset](https://www.kaggle.com/datasets/akhileshravi/nebula-images)
+* [Kaggle Galaxy Zoo 2 (GZ2) Resized Dataset](https://www.kaggle.com/datasets/robertmifsud/resized-reduced-gz2-images)
+* [Roboflow Planet Dataset](https://universe.roboflow.com/fashion-8zzww/planet-2vlvi/dataset/2)
+* [ESA Hubble Space Telescope Archive](https://esahubble.org/)
 
 ---
 
