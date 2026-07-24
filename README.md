@@ -27,8 +27,6 @@ The final ResNet-50 framework was evaluated on an independent test set containin
 
 To keep this repository lightweight and prevent storage bloat, the full 1,508-image training batch is hosted externally at https://drive.google.com/drive/folders/1ACld4iuCli1RlKnefHQkwO6yMEXILImO?usp=sharing
 
-A curated sub-folder (`dataset-sample/`) containing a few diagnostic preview images per class is included directly in this repository for immediate model testing and inference verification.
-
 ## Dataset Sources Used
 A total of 1,746 images were used to train and test the model. The dataset is evenly split across 5 categories.
 * [NOIRLab Star Cluster Archive](https://noirlab.edu/public/images/archive/category/starclusters/page/2/?sort=-release_date)
